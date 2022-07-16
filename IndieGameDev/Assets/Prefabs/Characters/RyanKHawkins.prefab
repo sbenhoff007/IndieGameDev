@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5787740223918705935}
   - component: {fileID: 7023717353305816333}
   - component: {fileID: 730105584644931302}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RyanKHawkins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  uiInventory: {fileID: 0}
 --- !u!95 &5787740223918705935
 Animator:
   serializedVersion: 3
@@ -152,10 +153,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0026210286, y: 0.00857351}
+  m_Offset: {x: -0.005162794, y: -0.007925334}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.55813956, y: 0.17758979}
     oldSize: {x: 0.18, y: 0.22}
     newSize: {x: 0.18, y: 0.22}
     adaptiveTilingThreshold: 0.5
@@ -163,5 +164,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15975794, y: 0.20444371}
+  m_Size: {x: 0.119282134, y: 0.06878645}
   m_EdgeRadius: 0
