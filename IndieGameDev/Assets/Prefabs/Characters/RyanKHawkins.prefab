@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 5787740223918705935}
   - component: {fileID: 7023717353305816333}
   - component: {fileID: 730105584644931302}
+  - component: {fileID: 3662957701362429862}
   m_Layer: 7
   m_Name: RyanKHawkins
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,7 +100,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  uiInventory: {fileID: 0}
 --- !u!95 &5787740223918705935
 Animator:
   serializedVersion: 3
@@ -166,3 +166,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.119282134, y: 0.06878645}
   m_EdgeRadius: 0
+--- !u!114 &3662957701362429862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8629946699217372769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c65fe934dacb9488b4f0bf01e88ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFull: 00000000
+  slots:
+  - {fileID: 0}

@@ -13,19 +13,11 @@ public class RyanKHawkinsController : MonoBehaviour
     Animator animator;
     Vector2 lookDirection = new Vector2(1, 0);
 
-    private Inventory inventory;
-    [SerializeField] private UI_Inventory uiInventory;
-
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-    }
-
-    private void Awake()
-    {
-        inventory = new Inventory();
     }
 
     // Update is called once per frame
