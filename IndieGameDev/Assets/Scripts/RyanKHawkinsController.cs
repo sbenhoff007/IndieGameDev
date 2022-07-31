@@ -37,6 +37,11 @@ public class RyanKHawkinsController : MonoBehaviour
         animator.SetFloat("Look X", lookDirection.x);
         animator.SetFloat("Look Y", lookDirection.y);
         animator.SetFloat("Speed", move.magnitude);
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            animator.SetTrigger("Fishing");
+        }
     }
 
     void FixedUpdate()
