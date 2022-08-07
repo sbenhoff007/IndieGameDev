@@ -13,8 +13,7 @@ public class RyanKHawkinsController : MonoBehaviour
     Animator animator;
     SpriteRenderer fishing;
     Vector2 lookDirection = new Vector2(1, 0);
-    bool left = false;
-
+    
     bool isFishing = false;
 
     // Start is called before the first frame update
@@ -28,8 +27,6 @@ public class RyanKHawkinsController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //isFishing = animator.GetBool("Fishing");
-
         if (!isFishing)
         {
             horizontal = Input.GetAxis("Horizontal");
@@ -39,9 +36,6 @@ public class RyanKHawkinsController : MonoBehaviour
 
             if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
             {
-                left = move.x < 0f ? true : false;
-                Debug.Log("Left = " + left);
-
                 lookDirection.Set(move.x, move.y);
                 lookDirection.Normalize();
             }
@@ -57,39 +51,15 @@ public class RyanKHawkinsController : MonoBehaviour
             isFishing = isFishing ? false : true;
             Debug.Log("F key pressed, isFishing = " + isFishing);
         }
-
-        if (isFishing)
-        {
-            Debug.Log("Fishing = true!");            
-
-            if (left)
-            {
-                Debug.Log("Left = true");
-                //fishing.size = new Vector2(-1, 1);
-                fishing.flipX = true;
-            }
-            else
-            {
-                //fishing.size = new Vector2(1, 1);
-                fishing.flipX = false;
-            }
-        }
     }
 
     void FixedUpdate()
     {
-        //if (animator.GetBool("Fishing") == true)
-        //{
-        //    //Stop all movement
-        //}
-        //else
-        //{
-            Vector2 position = rigidbody2d.position;
-            position.x = position.x + speed * horizontal * Time.deltaTime;
-            position.y = position.y + speed * vertical * Time.deltaTime;
+        Vector2 position = rigidbody2d.position;
+        position.x = position.x + speed * horizontal * Time.deltaTime;
+        position.y = position.y + speed * vertical * Time.deltaTime;
 
-            rigidbody2d.MovePosition(position);
-        //}
+        rigidbody2d.MovePosition(position);
     }
 
     public Vector3 GetPosition()
