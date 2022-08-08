@@ -15,6 +15,7 @@ public class RyanKHawkinsController : MonoBehaviour
     Vector2 lookDirection = new Vector2(1, 0);
     
     bool isFishing = false;
+    bool isCatching = false;
 
     // Start is called before the first frame update
     void Start()
@@ -47,9 +48,32 @@ public class RyanKHawkinsController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            animator.SetTrigger("Fishing");
-            isFishing = isFishing ? false : true;
-            Debug.Log("F key pressed, isFishing = " + isFishing);
+            if (!isCatching)
+            {
+                animator.SetTrigger("Fishing");
+                isFishing = animator.GetBool("Fishing");
+                Debug.Log("F key pressed, isFishing = " + isFishing);
+            }
+        }
+
+        if (isFishing && Input.GetKeyDown(KeyCode.C))
+        {
+           if (isCatching)
+            {
+                animator.ResetTrigger("Fishing");
+                isFishing = animator.GetBool("Fishing"); 
+                animator.ResetTrigger("Catching");
+                isCatching = animator.GetBool("Catching"); 
+                Debug.Log("Catching mode exit: " + isCatching + " Fishing = " + isFishing);
+            }
+            else
+            {
+                animator.SetTrigger("Catching");
+                isCatching = animator.GetBool("Catching"); 
+                Debug.Log("Setting the Catching trigger: " + isCatching);
+            }
+
+            Debug.Log("C key pressed, isCatching = " + isCatching);
         }
     }
 
