@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7626239174254647932}
   m_Layer: 5
   m_Name: FishingRodButton 1
-  m_TagString: Untagged
+  m_TagString: FishingRod
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

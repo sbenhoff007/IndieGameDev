@@ -13,9 +13,11 @@ public class RyanKHawkinsController : MonoBehaviour
     Animator animator;
     SpriteRenderer fishing;
     Vector2 lookDirection = new Vector2(1, 0);
-    
+
+    bool hasFishingRod = false;
     bool isFishing = false;
     bool isCatching = false;
+    Inventory inventory;
 
     // Start is called before the first frame update
     void Start()
@@ -23,12 +25,13 @@ public class RyanKHawkinsController : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         fishing = GetComponent<SpriteRenderer>();
+        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isFishing)
+        if (!isFishing && !isCatching)
         {
             horizontal = Input.GetAxis("Horizontal");
             vertical = Input.GetAxis("Vertical");
@@ -46,34 +49,38 @@ public class RyanKHawkinsController : MonoBehaviour
             animator.SetFloat("Speed", move.magnitude);
         }
 
+        for (int i = 0; i < inventory.slots.Length; i++)
+        {
+            //Iterate through the slots to see if the FishingRod tag is present on an object
+            if (inventory.slots[i] != null && inventory.slots[i].transform != null)
+            {
+                if (inventory.slots[i].transform.childCount > 0 && inventory.slots[i].transform.GetChild(0).gameObject != null)
+                {
+                    var child = inventory.slots[i].transform.GetChild(0).gameObject.CompareTag("FishingRod");
+                    hasFishingRod = true;
+                    Debug.Log("hasFishingRod = " + hasFishingRod);
+                    break;
+                }           
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (!isCatching)
+            if (!isCatching && hasFishingRod)
             {
                 animator.SetTrigger("Fishing");
-                isFishing = animator.GetBool("Fishing");
+                isFishing = isFishing ? false : true;
                 Debug.Log("F key pressed, isFishing = " + isFishing);
             }
         }
 
-        if (isFishing && Input.GetKeyDown(KeyCode.C))
+        if (isFishing && hasFishingRod && Input.GetKeyDown(KeyCode.C))
         {
-           if (isCatching)
-            {
-                animator.ResetTrigger("Fishing");
-                isFishing = animator.GetBool("Fishing"); 
-                animator.ResetTrigger("Catching");
-                isCatching = animator.GetBool("Catching"); 
-                Debug.Log("Catching mode exit: " + isCatching + " Fishing = " + isFishing);
-            }
-            else
-            {
-                animator.SetTrigger("Catching");
-                isCatching = animator.GetBool("Catching"); 
-                Debug.Log("Setting the Catching trigger: " + isCatching);
-            }
+            animator.SetTrigger("Catching");
+            isCatching = isCatching ? false : true;
+            isFishing = isCatching;
+            Debug.Log("Setting the Catching trigger: " + isCatching + " Fishing trigger: " + isFishing);
 
-            Debug.Log("C key pressed, isCatching = " + isCatching);
         }
     }
 
