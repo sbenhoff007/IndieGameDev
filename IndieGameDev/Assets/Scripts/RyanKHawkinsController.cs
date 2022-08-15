@@ -28,7 +28,6 @@ public class RyanKHawkinsController : MonoBehaviour
         animator = GetComponent<Animator>();
         fishing = GetComponent<SpriteRenderer>();
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        //fishCollection = GameObject.FindGameObjectWithTag("Player").GetComponent<FishCollection>();
     }
 
     // Update is called once per frame
@@ -61,7 +60,7 @@ public class RyanKHawkinsController : MonoBehaviour
                 {
                     var child = inventory.slots[i].transform.GetChild(0).gameObject.CompareTag("FishingRod");
                     hasFishingRod = true;
-                    //Debug.Log("hasFishingRod = " + hasFishingRod);
+                    
                     break;
                 }
             }
@@ -71,7 +70,6 @@ public class RyanKHawkinsController : MonoBehaviour
         {
             animator.SetTrigger("Fishing");
             isFishing = isFishing ? false : true;
-            //Debug.Log("F key pressed, isFishing = " + isFishing);
         }
 
         if (isFishing && hasFishingRod && isWater && Input.GetKeyDown(KeyCode.C))
@@ -79,8 +77,7 @@ public class RyanKHawkinsController : MonoBehaviour
             animator.SetTrigger("Catching");
             isCatching = isCatching ? false : true;
             isFishing = isCatching;
-            //Debug.Log("Setting the Catching trigger: " + isCatching + " Fishing trigger: " + isFishing);
-
+            
             if (fishCollection != null & !isCatching)
             {
                 
