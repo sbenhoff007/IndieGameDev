@@ -24,7 +24,11 @@ public class Slots : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            child.GetComponent<Spawn>().SpawnDroppedItem();
+            if (!child.CompareTag("Fish"))
+            {
+                child.GetComponent<Spawn>().SpawnDroppedItem();
+            }
+            
             GameObject.Destroy(child.gameObject);
         }
     }

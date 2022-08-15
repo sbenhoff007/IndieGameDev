@@ -19,7 +19,6 @@ public class RyanKHawkinsController : MonoBehaviour
     bool isFishing = false;
     bool isCatching = false;
     Inventory inventory;
-    public FishCollection fishCollection;
 
     // Start is called before the first frame update
     void Start()
@@ -77,18 +76,24 @@ public class RyanKHawkinsController : MonoBehaviour
             animator.SetTrigger("Catching");
             isCatching = isCatching ? false : true;
             isFishing = isCatching;
-            
-            if (fishCollection != null & !isCatching)
+
+            if (!isCatching)
             {
+                FishCollection fishCollection = GameObject.FindGameObjectWithTag("FishCollection").GetComponent<FishCollection>();
                 
-                int fishCount = fishCollection.GetComponentsInChildren<Fish>().Length;
-                int iRandomFish = Random.Range(0, fishCount);
-                Fish fish = fishCollection.transform.GetChild(iRandomFish).gameObject.GetComponent<Fish>();
-                float iRandomWeight = Random.Range(fish.fishMinWeight, fish.fishMaxWeight);
-                float iRandomLength = Random.Range(fish.fishMinLength, fish.fishMaxLength);
-                Debug.Log("Fish Collection Length: " + fishCount + " Fish ID: " + iRandomFish 
-                    + " Fish Name: " + fish.fishName + " Fish Description: " + fish.fishDescription 
-                    + " Fish Weight: " + iRandomWeight + " Fish Length: " + iRandomLength);
+                if (fishCollection != null)
+                {
+                    int fishCount = fishCollection.GetComponentsInChildren<Fish>().Length;
+                    int iRandomFish = Random.Range(0, fishCount);
+                    Fish fish = fishCollection.transform.GetChild(iRandomFish).gameObject.GetComponent<Fish>();
+                    float iRandomWeight = Random.Range(fish.fishMinWeight, fish.fishMaxWeight);
+                    float iRandomLength = Random.Range(fish.fishMinLength, fish.fishMaxLength);
+                    Debug.Log("Fish Collection Length: " + fishCount + " Fish ID: " + iRandomFish
+                        + " Fish Name: " + fish.fishName + " Fish Description: " + fish.fishDescription
+                        + " Fish Weight: " + iRandomWeight + " Fish Length: " + iRandomLength);
+
+                    fish.AddFishToInventory(fish);
+                }
             }
         }
     }

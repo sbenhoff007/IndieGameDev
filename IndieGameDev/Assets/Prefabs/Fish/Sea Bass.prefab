@@ -51,3 +51,4 @@ MonoBehaviour:
   fishMaxLength: 1.5
   fishMinWeight: 5
   fishMaxWeight: 12
+  fishButton: {fileID: 7488929715020025851, guid: 82e501528d108ca4dbf9e9f0e26c65e3, type: 3}
