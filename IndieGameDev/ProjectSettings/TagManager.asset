@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Equipment
   - FishingRod
+  - Water
+  - Fish
+  - FishCollection
   layers:
   - Default
   - TransparentFX

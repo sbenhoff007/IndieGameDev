@@ -15,9 +15,11 @@ public class RyanKHawkinsController : MonoBehaviour
     Vector2 lookDirection = new Vector2(1, 0);
 
     bool hasFishingRod = false;
+    bool isWater = false;
     bool isFishing = false;
     bool isCatching = false;
     Inventory inventory;
+    public FishCollection fishCollection;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +28,7 @@ public class RyanKHawkinsController : MonoBehaviour
         animator = GetComponent<Animator>();
         fishing = GetComponent<SpriteRenderer>();
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        //fishCollection = GameObject.FindGameObjectWithTag("Player").GetComponent<FishCollection>();
     }
 
     // Update is called once per frame
@@ -58,29 +61,38 @@ public class RyanKHawkinsController : MonoBehaviour
                 {
                     var child = inventory.slots[i].transform.GetChild(0).gameObject.CompareTag("FishingRod");
                     hasFishingRod = true;
-                    Debug.Log("hasFishingRod = " + hasFishingRod);
+                    //Debug.Log("hasFishingRod = " + hasFishingRod);
                     break;
-                }           
+                }
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (!isCatching && hasFishingRod && isWater && Input.GetKeyDown(KeyCode.F))
         {
-            if (!isCatching && hasFishingRod)
-            {
-                animator.SetTrigger("Fishing");
-                isFishing = isFishing ? false : true;
-                Debug.Log("F key pressed, isFishing = " + isFishing);
-            }
+            animator.SetTrigger("Fishing");
+            isFishing = isFishing ? false : true;
+            //Debug.Log("F key pressed, isFishing = " + isFishing);
         }
 
-        if (isFishing && hasFishingRod && Input.GetKeyDown(KeyCode.C))
+        if (isFishing && hasFishingRod && isWater && Input.GetKeyDown(KeyCode.C))
         {
             animator.SetTrigger("Catching");
             isCatching = isCatching ? false : true;
             isFishing = isCatching;
-            Debug.Log("Setting the Catching trigger: " + isCatching + " Fishing trigger: " + isFishing);
+            //Debug.Log("Setting the Catching trigger: " + isCatching + " Fishing trigger: " + isFishing);
 
+            if (fishCollection != null & !isCatching)
+            {
+                
+                int fishCount = fishCollection.GetComponentsInChildren<Fish>().Length;
+                int iRandomFish = Random.Range(0, fishCount);
+                Fish fish = fishCollection.transform.GetChild(iRandomFish).gameObject.GetComponent<Fish>();
+                float iRandomWeight = Random.Range(fish.fishMinWeight, fish.fishMaxWeight);
+                float iRandomLength = Random.Range(fish.fishMinLength, fish.fishMaxLength);
+                Debug.Log("Fish Collection Length: " + fishCount + " Fish ID: " + iRandomFish 
+                    + " Fish Name: " + fish.fishName + " Fish Description: " + fish.fishDescription 
+                    + " Fish Weight: " + iRandomWeight + " Fish Length: " + iRandomLength);
+            }
         }
     }
 
@@ -96,5 +108,17 @@ public class RyanKHawkinsController : MonoBehaviour
     public Vector3 GetPosition()
     {
         return transform.position;
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        isWater = other.gameObject.CompareTag("Water");
+        Debug.Log("isWater = " + isWater);
+    }
+
+    void OnCollisionExit2D(Collision2D other)
+    {
+        isWater = false;
+        Debug.Log("isWater = " + isWater);
     }
 }
