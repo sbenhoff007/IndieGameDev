@@ -9,6 +9,7 @@ TagManager:
   - Water
   - Fish
   - FishCollection
+  - FishObject
   layers:
   - Default
   - TransparentFX

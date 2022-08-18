@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Fish : MonoBehaviour
 {
@@ -17,7 +18,13 @@ public class Fish : MonoBehaviour
 
     void Start()
     {
-        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        Scene activeScene = SceneManager.GetActiveScene();
+        
+        // Assign inventory if it's not the battle scene
+        if (activeScene.name != "BattleScene")
+        {
+            inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        }
     }
 
     public void AddFishToInventory(Fish fish)

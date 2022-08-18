@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RyanKHawkinsController : MonoBehaviour
 {
@@ -79,21 +80,8 @@ public class RyanKHawkinsController : MonoBehaviour
 
             if (!isCatching)
             {
-                FishCollection fishCollection = GameObject.FindGameObjectWithTag("FishCollection").GetComponent<FishCollection>();
-                
-                if (fishCollection != null)
-                {
-                    int fishCount = fishCollection.GetComponentsInChildren<Fish>().Length;
-                    int iRandomFish = Random.Range(0, fishCount);
-                    Fish fish = fishCollection.transform.GetChild(iRandomFish).gameObject.GetComponent<Fish>();
-                    float iRandomWeight = Random.Range(fish.fishMinWeight, fish.fishMaxWeight);
-                    float iRandomLength = Random.Range(fish.fishMinLength, fish.fishMaxLength);
-                    Debug.Log("Fish Collection Length: " + fishCount + " Fish ID: " + iRandomFish
-                        + " Fish Name: " + fish.fishName + " Fish Description: " + fish.fishDescription
-                        + " Fish Weight: " + iRandomWeight + " Fish Length: " + iRandomLength);
-
-                    fish.AddFishToInventory(fish);
-                }
+                //Switch to Battle Scene
+                SceneManager.LoadSceneAsync("BattleScene");
             }
         }
     }
