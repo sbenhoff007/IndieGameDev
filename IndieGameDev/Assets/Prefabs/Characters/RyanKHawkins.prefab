@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  fishPrefab: {fileID: 493666487620568492, guid: 91c7f0c3d27f8d142b045b7c6e9830f9, type: 3}
+  catchInfoPrefab: {fileID: 616446919160396066, guid: 561f821452a4d604f88146f561b43c6b, type: 3}
 --- !u!95 &5787740223918705935
 Animator:
   serializedVersion: 3

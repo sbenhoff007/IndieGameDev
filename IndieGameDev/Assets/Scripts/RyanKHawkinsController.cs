@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class RyanKHawkinsController : MonoBehaviour
 {
     public float speed = 3.0f;
+    public GameObject catchInfoPrefab;
 
     Rigidbody2D rigidbody2d;
     float horizontal;
@@ -19,6 +20,8 @@ public class RyanKHawkinsController : MonoBehaviour
     bool isWater = false;
     bool isFishing = false;
     bool isCatching = false;
+    int iRandomWait = 0;
+    int iSuccessWait = 250;
     Inventory inventory;
 
     // Start is called before the first frame update
@@ -60,7 +63,7 @@ public class RyanKHawkinsController : MonoBehaviour
                 {
                     var child = inventory.slots[i].transform.GetChild(0).gameObject.CompareTag("FishingRod");
                     hasFishingRod = true;
-                    
+
                     break;
                 }
             }
@@ -70,19 +73,8 @@ public class RyanKHawkinsController : MonoBehaviour
         {
             animator.SetTrigger("Fishing");
             isFishing = isFishing ? false : true;
-        }
 
-        if (isFishing && hasFishingRod && isWater && Input.GetKeyDown(KeyCode.C))
-        {
-            animator.SetTrigger("Catching");
-            isCatching = isCatching ? false : true;
-            isFishing = isCatching;
-
-            if (!isCatching)
-            {
-                //Switch to Battle Scene
-                SceneManager.LoadSceneAsync("BattleScene");
-            }
+            StartCoroutine(FishingCoroutine());
         }
     }
 
@@ -110,5 +102,61 @@ public class RyanKHawkinsController : MonoBehaviour
     {
         isWater = false;
         Debug.Log("isWater = " + isWater);
+    }
+
+    IEnumerator FishingCoroutine()
+    {
+        //Print the time of when the function is first called.
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+        //Wait a random # of seconds & show the info animation
+        iRandomWait = Random.Range(1, 10);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(iRandomWait);
+
+        //Show the info sprite
+        Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+        Vector2 playerPos = new Vector2(player.position.x, player.position.y + 1);
+        GameObject catchInfoObject = Instantiate(catchInfoPrefab, playerPos, Quaternion.identity);
+        isCatching = true;
+        //isFishing = true;
+
+        while (!Input.GetKeyDown(KeyCode.C))
+        {
+            iSuccessWait = iSuccessWait > 0 ? iSuccessWait - 1 : 0;
+            Debug.Log("iSuccessWait while C is not pressed = " + iSuccessWait);
+            
+            if (iSuccessWait <= 0)
+            {
+                Debug.Log("iSuccessWait after C is pressed = " + iSuccessWait);
+                animator.SetTrigger("Fishing");
+                isFishing = false;
+                isCatching = false;
+                GameObject.Destroy(catchInfoObject);
+                iSuccessWaitReset();
+                yield break;
+            }
+
+            yield return null;    
+        }
+
+        if (Input.GetKeyDown(KeyCode.C) && iSuccessWait > 0)
+        {
+            isCatching = false;
+            isFishing = false;
+
+            //Switch to Battle Scene
+            SceneManager.LoadSceneAsync("BattleScene");            
+        }
+
+        iSuccessWaitReset();
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+    }
+
+    int iSuccessWaitReset()
+    {
+        iSuccessWait = 250;
+        return iSuccessWait;    
     }
 }

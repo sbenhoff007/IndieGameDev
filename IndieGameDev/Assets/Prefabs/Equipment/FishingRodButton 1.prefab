@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 923378325338557191}
   - component: {fileID: 923378325338557184}
   - component: {fileID: 923378325338557190}
-  - component: {fileID: 6024656903361712967}
-  - component: {fileID: 7626239174254647932}
+  - component: {fileID: 6778224123036459050}
   m_Layer: 5
   m_Name: FishingRodButton 1
   m_TagString: FishingRod
@@ -122,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7626239174254647932}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: EquipItem, Assembly-CSharp
         m_MethodName: Use
         m_Mode: 1
@@ -134,7 +133,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6024656903361712967
+--- !u!114 &6778224123036459050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,16 +146,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 1370144743963008040, guid: 2f3daa01e780f9a41918555b1b10e790, type: 3}
---- !u!114 &7626239174254647932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923378325338557186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dada4d360e566447a773144607dc30e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effect: {fileID: 0}
