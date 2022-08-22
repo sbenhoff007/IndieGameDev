@@ -11,6 +11,7 @@ TagManager:
   - FishCollection
   - FishObject
   - InfoDialog
+  - NPC
   layers:
   - Default
   - TransparentFX

@@ -35,34 +35,11 @@ public class BattleSystem : MonoBehaviour
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<RyanKHawkinsController>();
 
-        // Get the fish
-        FishCollection fishCollection = GameObject.FindGameObjectWithTag("FishCollection").GetComponent<FishCollection>();
-
-        if (fishCollection != null)
-        {
-            int fishCount = fishCollection.GetComponentsInChildren<Fish>().Length;
-            int iRandomFish = Random.Range(0, fishCount);
-            fish = fishCollection.transform.GetChild(iRandomFish).gameObject.GetComponent<Fish>();
-            float iRandomWeight = Random.Range(fish.fishMinWeight, fish.fishMaxWeight);
-            float iRandomLength = Random.Range(fish.fishMinLength, fish.fishMaxLength);
-            fishName = fish.fishName;
-            fishLevel = fish.fishCurrentLevel;
-            fishSprite = fish.fishSprite;
-
-            fishObject = GameObject.FindGameObjectWithTag("FishObject");
-            Debug.Log(fishObject.name);
-            fishObjectSprite = fishObject.GetComponent<SpriteRenderer>();
-            fishObjectSprite.sprite = fishSprite;
-            fishHUD.SetHUD(fish);
-
-            Debug.Log("Fish Collection Length: " + fishCount + " Fish ID: " + iRandomFish
-                + " Fish Name: " + fish.fishName + " Fish Description: " + fish.fishDescription
-                + " Fish Weight: " + iRandomWeight + " Fish Length: " + iRandomLength);
-        }
+        fish = GetRandomFish();
 
         // Set the HUD text values
-        dialogueText.text = "A wild " + fishName + " approaches!";
-        fishNameText.text = fishName;
+        dialogueText.text = "A wild " + fish.fishName + " approaches!";
+        fishNameText.text = fish.fishName;
         fishLevelText.text = "Lvl " + fish.fishCurrentLevel;
         playerNameText.text = player.name;
 
@@ -73,6 +50,35 @@ public class BattleSystem : MonoBehaviour
 
         state = BattleState.PLAYERTURN;
         StartCoroutine(SetupPlayerTurn());
+    }
+
+    Fish GetRandomFish()
+    {
+        // Get the fish
+        FishCollection fishCollection = GameObject.FindGameObjectWithTag("FishCollection").GetComponent<FishCollection>();
+
+        if (fishCollection != null)
+        {
+            int fishCount = fishCollection.GetComponentsInChildren<Fish>().Length;
+            int iRandomFish = Random.Range(0, fishCount);
+            fish = fishCollection.transform.GetChild(iRandomFish).gameObject.GetComponent<Fish>();
+            fish.fishCurrentWeight = Random.Range(fish.fishMinWeight, fish.fishMaxWeight);
+            fish.fishCurrentLength = Random.Range(fish.fishMinLength, fish.fishMaxLength);
+
+            fishObject = GameObject.FindGameObjectWithTag("FishObject");
+            fishObjectSprite = fishObject.GetComponent<SpriteRenderer>();
+            fishObjectSprite.sprite = fish.fishSprite;
+            fishHUD.SetHUD(fish);
+
+            Debug.Log("Fish Collection Length: " + fishCount + " Fish ID: " + iRandomFish
+                + " Fish Name: " + fish.fishName + " Fish Description: " + fish.fishDescription
+                + " Fish Weight: " + fish.fishCurrentWeight + " Fish Length: " + fish.fishCurrentLength
+                + " Fish Level: " + fish.fishCurrentLevel);
+
+            return fish;
+        }
+
+        return null;
     }
 
     public void CatchFish()
