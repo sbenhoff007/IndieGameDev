@@ -23,6 +23,8 @@ public class Pickup : MonoBehaviour
                     //Item can be added to inventory!
                     inventory.isFull[i] = true;
                     Instantiate(itemButton, inventory.slots[i].transform, false);
+                    PlayerPrefs.SetString("InventoryItem" + i, gameObject.name);
+                    PlayerPrefs.Save();
                     Destroy(gameObject);
                     break;
                 }

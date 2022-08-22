@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7023717353305816333}
   - component: {fileID: 730105584644931302}
   - component: {fileID: 3662957701362429862}
+  - component: {fileID: 5241832737835556599}
   m_Layer: 7
   m_Name: RyanKHawkins
   m_TagString: Player
@@ -182,3 +183,17 @@ MonoBehaviour:
   isFull: 00000000
   slots:
   - {fileID: 0}
+--- !u!114 &5241832737835556599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8629946699217372769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47974a065a1da784eb0120b3ef756875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoDialog: {fileID: 0}
+  infoText: {fileID: 0}

@@ -7,6 +7,12 @@ public class RyanKHawkinsController : MonoBehaviour
 {
     public float speed = 3.0f;
     public GameObject catchInfoPrefab;
+    public int currentLevel = 1;
+    public int maxLevel = 99;
+    public int currentHealth = 10;
+    public int maxHealth = 10;
+    public int currentExperiencePoints = 0;
+    public int maxExperiencePoints = 100;
 
     Rigidbody2D rigidbody2d;
     float horizontal;
@@ -23,6 +29,8 @@ public class RyanKHawkinsController : MonoBehaviour
     int iRandomWait = 0;
     int iSuccessWait = 250;
     Inventory inventory;
+    GamePlaySystem gamePlaySystem;
+    Coroutine fishingCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +39,41 @@ public class RyanKHawkinsController : MonoBehaviour
         animator = GetComponent<Animator>();
         fishing = GetComponent<SpriteRenderer>();
         inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        gamePlaySystem = GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlaySystem>();
+
+        LoadPlayerPrefs();
+    }
+
+    public void LoadPlayerPrefs()
+    {
+        if (PlayerPrefs.HasKey("PlayerCurrentHealth"))
+        {
+            this.currentHealth = PlayerPrefs.GetInt("PlayerCurrentHealth");
+        }
+
+        if (PlayerPrefs.HasKey("PlayerCurrentLevel"))
+        {
+            this.currentLevel = PlayerPrefs.GetInt("PlayerCurrentLevel");
+        }
+
+        if (PlayerPrefs.HasKey("PlayerCurrentExperiencePoints"))
+        {
+            this.currentExperiencePoints = PlayerPrefs.GetInt("PlayerCurrentExperiencePoints");
+        }
+
+        if (PlayerPrefs.HasKey("PlayerMaxExperiencePoints"))
+        {
+            this.maxExperiencePoints = PlayerPrefs.GetInt("PlayerMaxExperiencePoints");
+        }
+
+        if (PlayerPrefs.HasKey("PlayerMaxHealth"))
+        {
+            this.maxHealth = PlayerPrefs.GetInt("PlayerMaxHealth");
+        }
+
+        Debug.Log("Player Info: CurrentHealth: " + this.currentHealth + "; CurrentLevel: " + this.currentLevel +
+            "; CurrentExpPoints: " + this.currentExperiencePoints + "; MaxExpPoints: " + this.maxExperiencePoints +
+            "; MaxHealth: " + this.maxHealth);
     }
 
     // Update is called once per frame
@@ -61,10 +104,11 @@ public class RyanKHawkinsController : MonoBehaviour
             {
                 if (inventory.slots[i].transform.childCount > 0 && inventory.slots[i].transform.GetChild(0).gameObject != null)
                 {
-                    var child = inventory.slots[i].transform.GetChild(0).gameObject.CompareTag("FishingRod");
-                    hasFishingRod = true;
-
-                    break;
+                    hasFishingRod = inventory.slots[i].transform.GetChild(0).CompareTag("FishingRod");
+                    if (hasFishingRod)
+                    {
+                        break;
+                    }
                 }
             }
         }
@@ -74,7 +118,17 @@ public class RyanKHawkinsController : MonoBehaviour
             animator.SetTrigger("Fishing");
             isFishing = isFishing ? false : true;
 
-            StartCoroutine(FishingCoroutine());
+            Debug.Log("F key pressed on update event, isFishing=" + isFishing);
+
+            if (isFishing)
+            {
+                fishingCoroutine = StartCoroutine(FishingCoroutine());
+            }
+            else
+            {
+                StopCoroutine(fishingCoroutine);
+                Debug.Log("Fishing Coroutine Stopped.");
+            }
         }
     }
 
@@ -106,57 +160,63 @@ public class RyanKHawkinsController : MonoBehaviour
 
     IEnumerator FishingCoroutine()
     {
-        //Print the time of when the function is first called.
-        Debug.Log("Started Coroutine at timestamp : " + Time.time);
-
-        //Wait a random # of seconds & show the info animation
-        iRandomWait = Random.Range(1, 10);
-
-        //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(iRandomWait);
-
-        //Show the info sprite
-        Transform player = GameObject.FindGameObjectWithTag("Player").transform;
-        Vector2 playerPos = new Vector2(player.position.x, player.position.y + 1);
-        GameObject catchInfoObject = Instantiate(catchInfoPrefab, playerPos, Quaternion.identity);
-        isCatching = true;
-        //isFishing = true;
-
-        while (!Input.GetKeyDown(KeyCode.C))
+        if (isFishing && !isCatching)
         {
-            iSuccessWait = iSuccessWait > 0 ? iSuccessWait - 1 : 0;
-            Debug.Log("iSuccessWait while C is not pressed = " + iSuccessWait);
-            
-            if (iSuccessWait <= 0)
+            //Print the time of when the function is first called.
+            Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+            //Wait a random # of seconds & show the info animation
+            iRandomWait = Random.Range(1, 10);
+            yield return new WaitForSeconds(iRandomWait);
+
+            //Show the info sprite
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+            Vector2 playerPos = new Vector2(player.position.x, player.position.y + 1);
+            GameObject catchInfoObject = Instantiate(catchInfoPrefab, playerPos, Quaternion.identity);
+            isCatching = true;
+
+            while (!Input.GetKeyDown(KeyCode.C))
             {
-                Debug.Log("iSuccessWait after C is pressed = " + iSuccessWait);
-                animator.SetTrigger("Fishing");
-                isFishing = false;
-                isCatching = false;
-                GameObject.Destroy(catchInfoObject);
-                iSuccessWaitReset();
-                yield break;
+                iSuccessWait = iSuccessWait > 0 ? iSuccessWait - 1 : 0;
+                Debug.Log("iSuccessWait while C is not pressed = " + iSuccessWait);
+
+                if (iSuccessWait <= 0)
+                {
+                    Debug.Log("iSuccessWait after C is pressed = " + iSuccessWait);
+                    animator.SetTrigger("Fishing");
+                    isFishing = false;
+                    isCatching = false;
+                    GameObject.Destroy(catchInfoObject);
+                    iSuccessWaitReset();
+                    gamePlaySystem.ShowInfoDialog("The fish got away!");
+                    yield return new WaitForSeconds(5);
+                    gamePlaySystem.HideInfoDialog();
+                    Debug.Log("Exited Coroutine at timestamp : " + Time.time + "; failed catch");
+                    yield break;
+                }
+
+                yield return null;
             }
 
-            yield return null;    
-        }
+            if (Input.GetKeyDown(KeyCode.C) && iSuccessWait > 0)
+            {
+                isCatching = false;
+                isFishing = false;
 
-        if (Input.GetKeyDown(KeyCode.C) && iSuccessWait > 0)
-        {
-            isCatching = false;
-            isFishing = false;
-
-            //Switch to Battle Scene
-            SceneManager.LoadSceneAsync("BattleScene");            
+                //Switch to Battle Scene
+                SceneManager.LoadSceneAsync("BattleScene");
+            }
         }
 
         iSuccessWaitReset();
+        isCatching = false;
+        isFishing = false;
         Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
 
     int iSuccessWaitReset()
     {
         iSuccessWait = 250;
-        return iSuccessWait;    
+        return iSuccessWait;
     }
 }

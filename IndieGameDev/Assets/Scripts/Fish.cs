@@ -10,35 +10,12 @@ public class Fish : MonoBehaviour
     public string fishDescription;
     public float fishMinLength;
     public float fishMaxLength;
+    public float fishCurrentLength;
     public float fishMinWeight;
     public float fishMaxWeight;
+    public float fishCurrentWeight;
     public GameObject fishButton;
-
-    Inventory inventory;    
-
-    void Start()
-    {
-        Scene activeScene = SceneManager.GetActiveScene();
-        
-        // Assign inventory if it's not the battle scene
-        if (activeScene.name != "BattleScene")
-        {
-            inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        }
-    }
-
-    public void AddFishToInventory(Fish fish)
-    {
-        for (int i = 0; i < inventory.slots.Length; i++)
-        {
-            if (inventory.isFull[i] == false)
-            {
-                //Item can be added to inventory!
-                inventory.isFull[i] = true;
-                Instantiate(fishButton, inventory.slots[i].transform, false);
-                Debug.Log("Fish Added to Inventory Slot " + i);
-                break;
-            }
-        }
-    }
+    public int fishCurrentLevel = 1;
+    public int fishCurrentHealth = 10;
+    public int fishMaxHealth = 10;
 }
