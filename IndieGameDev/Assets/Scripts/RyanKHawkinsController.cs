@@ -13,6 +13,7 @@ public class RyanKHawkinsController : MonoBehaviour
     public int maxHealth = 10;
     public int currentExperiencePoints = 0;
     public int maxExperiencePoints = 100;
+    public int currentGold = 0;
 
     Rigidbody2D rigidbody2d;
     float horizontal;
@@ -71,9 +72,25 @@ public class RyanKHawkinsController : MonoBehaviour
             this.maxHealth = PlayerPrefs.GetInt("PlayerMaxHealth");
         }
 
+        if (PlayerPrefs.HasKey("PlayerCurrentGold"))
+        {
+            this.currentGold = PlayerPrefs.GetInt("PlayerCurrentGold");
+        }
+
+        if (PlayerPrefs.HasKey("PlayerCurrentPositionX") && PlayerPrefs.HasKey("PlayerCurrentPositionY"))
+        {
+            
+            if (!SceneManager.GetActiveScene().name.Equals("BattleScene"))
+            {
+                float positionX = PlayerPrefs.GetFloat("PlayerCurrentPositionX");
+                float positionY = PlayerPrefs.GetFloat("PlayerCurrentPositionY");
+                transform.position = new Vector2(positionX, positionY);
+            }
+        }
+
         Debug.Log("Player Info: CurrentHealth: " + this.currentHealth + "; CurrentLevel: " + this.currentLevel +
             "; CurrentExpPoints: " + this.currentExperiencePoints + "; MaxExpPoints: " + this.maxExperiencePoints +
-            "; MaxHealth: " + this.maxHealth);
+            "; MaxHealth: " + this.maxHealth + "; CurrentGold: " + this.currentGold);
     }
 
     // Update is called once per frame
@@ -130,6 +147,22 @@ public class RyanKHawkinsController : MonoBehaviour
                 Debug.Log("Fishing Coroutine Stopped.");
             }
         }
+
+        if (!isCatching && !isFishing && Input.GetKeyDown(KeyCode.X))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
+            if (hit.collider != null)
+            {
+                Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+
+                QuestGiver questGiver = hit.collider.gameObject.GetComponentInChildren<QuestGiver>();
+                if (questGiver != null)
+                {
+                    Debug.Log("Quest Giver is not null!");
+                    questGiver.OpenQuestWindow();
+                }
+            }
+        }
     }
 
     void FixedUpdate()
@@ -139,6 +172,9 @@ public class RyanKHawkinsController : MonoBehaviour
         position.y = position.y + speed * vertical * Time.deltaTime;
 
         rigidbody2d.MovePosition(position);
+
+        PlayerPrefs.SetFloat("PlayerCurrentPositionX", position.x);
+        PlayerPrefs.SetFloat("PlayerCurrentPositionY", position.y);
     }
 
     public Vector3 GetPosition()
@@ -218,5 +254,22 @@ public class RyanKHawkinsController : MonoBehaviour
     {
         iSuccessWait = 250;
         return iSuccessWait;
+    }
+
+    public void LevelUp()
+    {
+        currentLevel = currentLevel + 1;
+        currentHealth = maxHealth * currentLevel;
+        maxExperiencePoints = maxExperiencePoints * currentLevel;
+        maxHealth = currentHealth;
+
+        PlayerPrefs.SetInt("PlayerCurrentLevel", currentLevel);
+        PlayerPrefs.SetInt("PlayerCurrentHealth", currentHealth);
+        PlayerPrefs.SetInt("PlayerMaxExperiencePoints", maxExperiencePoints);
+        PlayerPrefs.SetInt("PlayerMaxHealth", maxHealth);
+
+        Debug.Log("Player Info: CurrentHealth: " + this.currentHealth + "; CurrentLevel: " + this.currentLevel +
+            "; CurrentExpPoints: " + this.currentExperiencePoints + "; MaxExpPoints: " + this.maxExperiencePoints +
+            "; MaxHealth: " + this.maxHealth + "; CurrentGold: " + this.currentGold);
     }
 }

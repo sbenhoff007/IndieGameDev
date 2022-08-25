@@ -106,6 +106,7 @@ public class BattleSystem : MonoBehaviour
             if (player.currentExperiencePoints >= player.maxExperiencePoints)
             {
                 player.currentLevel = player.currentLevel + 1;
+                player.currentHealth = player.maxHealth * player.currentLevel;
                 text = text + " You leveled up! Lvl " + player.currentLevel;
                 leveledUp = true;
             }

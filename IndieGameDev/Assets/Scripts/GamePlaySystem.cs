@@ -25,8 +25,19 @@ public class GamePlaySystem : MonoBehaviour
         canvasGroup.alpha = 1;
     }
 
+    public void ShowInfoDialog(string dialogText, float wait)
+    {
+        StartCoroutine(ShowInfoDialogWait(dialogText, wait));
+    }
     public void HideInfoDialog() 
     {
         canvasGroup.alpha = 0;
+    }
+
+    IEnumerator ShowInfoDialogWait(string dialogText, float wait)
+    {
+        ShowInfoDialog(dialogText);
+        yield return new WaitForSeconds(wait);
+        HideInfoDialog();
     }
 }
