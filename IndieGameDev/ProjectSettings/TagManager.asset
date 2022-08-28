@@ -12,6 +12,13 @@ TagManager:
   - FishObject
   - InfoDialog
   - NPC
+  - Quest
+  - StartingQuestGiver
+  - GameplaySystem
+  - QuestSystem
+  - QuestDB
+  - QuestJournalDialog
+  - QuestJournalItem
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,7 @@ public enum BattleState { START, PLAYERTURN, FISHTURN, WON, LOST }
 public class BattleSystem : MonoBehaviour
 {
     public Text dialogueText;
+    public Text infoText;
     public Text fishNameText;
     public Text fishLevelText;
     public Text playerNameText;
@@ -38,6 +39,7 @@ public class BattleSystem : MonoBehaviour
         fish = GetRandomFish();
 
         // Set the HUD text values
+        infoText.gameObject.SetActive(false);
         dialogueText.text = "A wild " + fish.fishName + " approaches!";
         fishNameText.text = fish.fishName;
         fishLevelText.text = "Lvl " + fish.fishCurrentLevel;
@@ -110,6 +112,7 @@ public class BattleSystem : MonoBehaviour
                 text = text + " You leveled up! Lvl " + player.currentLevel;
                 leveledUp = true;
             }
+            infoText.gameObject.SetActive(true);
             state = BattleState.WON;
         }
 

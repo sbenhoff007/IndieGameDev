@@ -15,8 +15,13 @@ public class DevFunctions : MonoBehaviour
 
     public void ShowControls()
     {
-        gamePlaySystem = GetComponent<GamePlaySystem>();
+        gamePlaySystem = GameObject.FindGameObjectWithTag("GameplaySystem").GetComponent<GamePlaySystem>();
         string infoText = "F: Fishing | C: Catching | X: Interacting \r\n Arrows: Moving";
         gamePlaySystem.ShowInfoDialog(infoText, 3f);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

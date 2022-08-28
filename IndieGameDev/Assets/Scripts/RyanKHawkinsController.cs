@@ -31,6 +31,7 @@ public class RyanKHawkinsController : MonoBehaviour
     int iSuccessWait = 250;
     Inventory inventory;
     GamePlaySystem gamePlaySystem;
+    QuestSystem questSystem;
     Coroutine fishingCoroutine;
 
     // Start is called before the first frame update
@@ -39,8 +40,9 @@ public class RyanKHawkinsController : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         fishing = GetComponent<SpriteRenderer>();
-        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
-        gamePlaySystem = GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlaySystem>();
+        inventory = GetComponent<Inventory>();
+        gamePlaySystem = GameObject.FindGameObjectWithTag("GameplaySystem").GetComponent<GamePlaySystem>();
+        questSystem = GameObject.FindGameObjectWithTag("QuestSystem").GetComponent<QuestSystem>();
 
         LoadPlayerPrefs();
     }
@@ -131,11 +133,9 @@ public class RyanKHawkinsController : MonoBehaviour
         }
 
         if (!isCatching && hasFishingRod && isWater && Input.GetKeyDown(KeyCode.F))
-        {
+        {        
             animator.SetTrigger("Fishing");
             isFishing = isFishing ? false : true;
-
-            Debug.Log("F key pressed on update event, isFishing=" + isFishing);
 
             if (isFishing)
             {
@@ -144,8 +144,11 @@ public class RyanKHawkinsController : MonoBehaviour
             else
             {
                 StopCoroutine(fishingCoroutine);
-                Debug.Log("Fishing Coroutine Stopped.");
             }
+        }
+        else if (!isCatching && !hasFishingRod && isWater && Input.GetKeyDown(KeyCode.F))
+        {
+            gamePlaySystem.ShowInfoDialog("You need a fishing rod to fish!", 2f);
         }
 
         if (!isCatching && !isFishing && Input.GetKeyDown(KeyCode.X))
@@ -153,13 +156,21 @@ public class RyanKHawkinsController : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
             if (hit.collider != null)
             {
-                Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
-
                 QuestGiver questGiver = hit.collider.gameObject.GetComponentInChildren<QuestGiver>();
                 if (questGiver != null)
                 {
-                    Debug.Log("Quest Giver is not null!");
-                    questGiver.OpenQuestWindow();
+                    questGiver.enabled = true;
+                    QuestGiver startingQuestGiver = GameObject.FindGameObjectWithTag("StartingQuestGiver").GetComponent<QuestGiver>();
+                    if (startingQuestGiver.quest.isActive)
+                    {
+                        questSystem.quest = startingQuestGiver.quest;
+                        questSystem.CompleteQuest();
+                        StartCoroutine(questGiver.OpenQuestWindowCoroutine());
+                    }
+                    else
+                    {
+                        questGiver.OpenQuestGiverWindow();
+                    }                    
                 }
             }
         }
@@ -185,13 +196,11 @@ public class RyanKHawkinsController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
         isWater = other.gameObject.CompareTag("Water");
-        Debug.Log("isWater = " + isWater);
     }
 
     void OnCollisionExit2D(Collision2D other)
     {
         isWater = false;
-        Debug.Log("isWater = " + isWater);
     }
 
     IEnumerator FishingCoroutine()
@@ -218,7 +227,6 @@ public class RyanKHawkinsController : MonoBehaviour
 
                 if (iSuccessWait <= 0)
                 {
-                    Debug.Log("iSuccessWait after C is pressed = " + iSuccessWait);
                     animator.SetTrigger("Fishing");
                     isFishing = false;
                     isCatching = false;
@@ -227,7 +235,6 @@ public class RyanKHawkinsController : MonoBehaviour
                     gamePlaySystem.ShowInfoDialog("The fish got away!");
                     yield return new WaitForSeconds(5);
                     gamePlaySystem.HideInfoDialog();
-                    Debug.Log("Exited Coroutine at timestamp : " + Time.time + "; failed catch");
                     yield break;
                 }
 
