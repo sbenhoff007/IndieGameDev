@@ -22,7 +22,7 @@ public class QuestSystem : MonoBehaviour
     bool hasQuestItem = false;
     int inventorySlotWithQuestItem;
     Vector3 questGiverDialogPosition;
-
+    
     public void Start()
     {
         playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -31,7 +31,7 @@ public class QuestSystem : MonoBehaviour
         questJournalEntry = questJournalDialog.questJournalEntryPrefab.GetComponent<QuestJournalEntry>();   
         gamePlaySystem = GameObject.FindGameObjectWithTag("GameplaySystem").GetComponent<GamePlaySystem>();
         inventory = playerObject.GetComponent<Inventory>();
-
+        
         if (PlayerPrefs.GetInt("QuestIsActive-" + quest.questId) == 1)
         {
             isActive = true;
@@ -51,8 +51,12 @@ public class QuestSystem : MonoBehaviour
         if (PlayerPrefs.GetInt("QuestIsComplete-1") == 0)
         {
             //Starting Quest is Active
-            questGiverDialogPosition = new Vector2(-300,0);
+            questGiverDialogPosition = new Vector2(-300, 0);
             OpenQuestWindow(questGiverDialogPosition);
+        }
+        else
+        {
+            questJournalDialog.AddActiveQuestsToJournal();
         }
     }
 
@@ -244,7 +248,7 @@ public class QuestSystem : MonoBehaviour
         PlayerPrefs.SetInt("QuestIsComplete-" + quest.questId, 1);
 
         CloseQuestWindow();
-
+        quest.questGiver.HideQuestAvailable();
         gamePlaySystem.ShowInfoDialog("Quest Complete! " + quest.title, 2f);
     }
 

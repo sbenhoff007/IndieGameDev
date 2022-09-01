@@ -482,6 +482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quest: {fileID: 542785142}
+  questAvailablePrefab: {fileID: 0}
 --- !u!4 &62155666
 Transform:
   m_ObjectHideFlags: 0
@@ -5478,6 +5479,7 @@ MonoBehaviour:
   experienceReward: 100
   goldReward: 150
   questItem: {fileID: 0}
+  questGiver: {fileID: 62155665}
 --- !u!114 &572971918 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8090090567976925322, guid: bdedcb5d9677e014fbbb1831151aa783, type: 3}
@@ -10290,6 +10292,7 @@ MonoBehaviour:
   experienceReward: 250
   goldReward: 750
   questItem: {fileID: 572971918}
+  questGiver: {fileID: 1882299351}
 --- !u!1 &1361456925
 GameObject:
   m_ObjectHideFlags: 0
@@ -10564,6 +10567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1447912365}
+  - component: {fileID: 1447912366}
   m_Layer: 0
   m_Name: QuestDatabase
   m_TagString: QuestDB
@@ -10587,6 +10591,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1447912366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447912364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c04038493fca404fa9fc8a8532b9f2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1484815988
 GameObject:
   m_ObjectHideFlags: 0
@@ -11134,6 +11150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quest: {fileID: 1358326146}
+  questAvailablePrefab: {fileID: 616446919160396066, guid: 561f821452a4d604f88146f561b43c6b, type: 3}
 --- !u!1 &1915172645
 GameObject:
   m_ObjectHideFlags: 0
@@ -12040,6 +12057,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: QuestJournalDialog
       objectReference: {fileID: 0}
+    - target: {fileID: 1320903748542529805, guid: de727681a6e6cae488c50007179c1e7a, type: 3}
+      propertyPath: questDB
+      value: 
+      objectReference: {fileID: 1447912366}
     - target: {fileID: 1320903748542529805, guid: de727681a6e6cae488c50007179c1e7a, type: 3}
       propertyPath: questGiverDialog
       value: 

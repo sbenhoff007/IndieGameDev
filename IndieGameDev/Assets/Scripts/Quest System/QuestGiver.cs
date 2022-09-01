@@ -7,13 +7,15 @@ using UnityEngine.UI;
 public class QuestGiver : MonoBehaviour
 {
     public Quest quest;
-    
+    public GameObject questAvailablePrefab;
+
     GamePlaySystem gamePlaySystem;
     QuestSystem questSystem;
     bool isActive = false;
     bool isComplete = false;
     bool hasQuestItem = false;
     int inventorySlotWithQuestItem;
+    GameObject questAvailableObject;
 
     public void Start()
     {
@@ -34,6 +36,12 @@ public class QuestGiver : MonoBehaviour
             isActive = false;
             quest.isActive = false;
             PlayerPrefs.SetInt("QuestIsActive-" + quest.questId, 0);
+            HideQuestAvailable();
+        } 
+        
+        if (!isComplete)
+        {
+            ShowQuestAvailable();
         }
     }
 
@@ -49,5 +57,18 @@ public class QuestGiver : MonoBehaviour
         Vector3 questGiverPosition = questGiverTransform.position;
         questSystem.quest = quest;
         questSystem.OpenQuestWindow(questGiverPosition);
+    }
+
+    public void ShowQuestAvailable()
+    {
+        //Show the info sprite
+        Transform npc = GetComponent<Transform>();
+        Vector2 npcPos = new Vector2(npc.position.x, npc.position.y + 1);
+        questAvailableObject = Instantiate(questAvailablePrefab, npcPos, Quaternion.identity);
+    }
+
+    public void HideQuestAvailable()
+    {
+        Destroy(questAvailableObject);
     }
 }

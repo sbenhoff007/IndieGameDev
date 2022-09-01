@@ -14,4 +14,5 @@ public class Quest : MonoBehaviour
     public int experienceReward;
     public int goldReward;
     public Fish questItem;
+    public QuestGiver questGiver;
 }
