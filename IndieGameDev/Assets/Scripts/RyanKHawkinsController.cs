@@ -279,4 +279,45 @@ public class RyanKHawkinsController : MonoBehaviour
             "; CurrentExpPoints: " + this.currentExperiencePoints + "; MaxExpPoints: " + this.maxExperiencePoints +
             "; MaxHealth: " + this.maxHealth + "; CurrentGold: " + this.currentGold);
     }
+
+    public void UseHealingItem(Item item)
+    {
+        bool isItem = item.gameObject.CompareTag("Item");
+
+        if (isItem)
+        {
+            Item healingItem = item.gameObject.GetComponent<Item>();
+            if (healingItem != null)
+            {
+                bool isHealing = healingItem.type.Equals(Item.ItemType.HEALING);
+                if (isHealing)
+                {
+                    int healAmt = healingItem.healAmt;
+                    currentHealth = ChangeHealth(healAmt);
+
+                    foreach (Transform child in transform)
+                    {
+                        GameObject.Destroy(child.gameObject);
+                    }
+
+                    Debug.Log($"Healing Item Found! Current Health:{currentHealth}");
+                }
+            }
+        }
+    }
+    public int ChangeHealth(int amount)
+    {
+        //if (amount < 0)
+        //{
+        //    if (isInvincible)
+        //        return;
+
+        //    isInvincible = true;
+        //    invincibleTimer = timeInvincible;
+        //}
+
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        Debug.Log(currentHealth + "/" + maxHealth);
+        return currentHealth;
+    }
 }

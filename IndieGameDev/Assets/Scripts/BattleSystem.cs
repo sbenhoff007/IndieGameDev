@@ -225,7 +225,7 @@ public class BattleSystem : MonoBehaviour
 
         yield return new WaitForSeconds(3);
         int amount = -5;
-        player.currentHealth = ChangeHealth(player, amount);
+        player.currentHealth = player.ChangeHealth(amount);
         dialogueText.text = amount + " points of damage to " + player.name + "!";
         playerHUD.SetHP(player.currentHealth);
         yield return new WaitForSeconds(3);
@@ -315,21 +315,21 @@ public class BattleSystem : MonoBehaviour
         Debug.Log("Exited ShowDialogueMessage Coroutine at timestamp : " + Time.time);
     }
 
-    public int ChangeHealth(RyanKHawkinsController player, int amount)
-    {
-        //if (amount < 0)
-        //{
-        //    if (isInvincible)
-        //        return;
+    //public int ChangeHealth(RyanKHawkinsController player, int amount)
+    //{
+    //    //if (amount < 0)
+    //    //{
+    //    //    if (isInvincible)
+    //    //        return;
 
-        //    isInvincible = true;
-        //    invincibleTimer = timeInvincible;
-        //}
+    //    //    isInvincible = true;
+    //    //    invincibleTimer = timeInvincible;
+    //    //}
 
-        player.currentHealth = Mathf.Clamp(player.currentHealth + amount, 0, player.maxHealth);
-        Debug.Log(player.currentHealth + "/" + player.maxHealth);
-        return player.currentHealth;
-    }
+    //    player.currentHealth = Mathf.Clamp(player.currentHealth + amount, 0, player.maxHealth);
+    //    Debug.Log(player.currentHealth + "/" + player.maxHealth);
+    //    return player.currentHealth;
+    //}
 
     public int ChangeHealth(Fish fish, int amount)
     {
