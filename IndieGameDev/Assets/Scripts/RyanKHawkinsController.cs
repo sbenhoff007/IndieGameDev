@@ -29,9 +29,9 @@ public class RyanKHawkinsController : MonoBehaviour
     bool isCatching = false;
     int iRandomWait = 0;
     int iSuccessWait = 250;
-    Inventory inventory;
+    //Inventory inventory;
     GamePlaySystem gamePlaySystem;
-    QuestSystem questSystem;
+    //QuestSystem questSystem;
     Coroutine fishingCoroutine;
 
     // Start is called before the first frame update
@@ -40,9 +40,9 @@ public class RyanKHawkinsController : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         fishing = GetComponent<SpriteRenderer>();
-        inventory = GetComponent<Inventory>();
+        //inventory = GetComponent<Inventory>();
         gamePlaySystem = GameObject.FindGameObjectWithTag("GameplaySystem").GetComponent<GamePlaySystem>();
-        questSystem = GameObject.FindGameObjectWithTag("QuestSystem").GetComponent<QuestSystem>();
+        //questSystem = GameObject.FindGameObjectWithTag("QuestSystem").GetComponent<QuestSystem>();
 
         LoadPlayerPrefs();
     }
@@ -116,21 +116,21 @@ public class RyanKHawkinsController : MonoBehaviour
             animator.SetFloat("Speed", move.magnitude);
         }
 
-        for (int i = 0; i < inventory.slots.Length; i++)
-        {
-            //Iterate through the slots to see if the FishingRod tag is present on an object
-            if (inventory.slots[i] != null && inventory.slots[i].transform != null)
-            {
-                if (inventory.slots[i].transform.childCount > 0 && inventory.slots[i].transform.GetChild(0).gameObject != null)
-                {
-                    hasFishingRod = inventory.slots[i].transform.GetChild(0).CompareTag("FishingRod");
-                    if (hasFishingRod)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
+        //for (int i = 0; i < inventory.slots.Length; i++)
+        //{
+        //    //Iterate through the slots to see if the FishingRod tag is present on an object
+        //    if (inventory.slots[i] != null && inventory.slots[i].transform != null)
+        //    {
+        //        if (inventory.slots[i].transform.childCount > 0 && inventory.slots[i].transform.GetChild(0).gameObject != null)
+        //        {
+        //            hasFishingRod = inventory.slots[i].transform.GetChild(0).CompareTag("FishingRod");
+        //            if (hasFishingRod)
+        //            {
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
         if (!isCatching && hasFishingRod && isWater && Input.GetKeyDown(KeyCode.F))
         {        
@@ -151,29 +151,29 @@ public class RyanKHawkinsController : MonoBehaviour
             gamePlaySystem.ShowInfoDialog("You need a fishing rod to fish!", 2f);
         }
 
-        if (!isCatching && !isFishing && Input.GetKeyDown(KeyCode.X))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
-            if (hit.collider != null)
-            {
-                QuestGiver questGiver = hit.collider.gameObject.GetComponentInChildren<QuestGiver>();
-                if (questGiver != null)
-                {
-                    questGiver.enabled = true;
-                    QuestGiver startingQuestGiver = GameObject.FindGameObjectWithTag("StartingQuestGiver").GetComponent<QuestGiver>();
-                    if (startingQuestGiver.quest.isActive)
-                    {
-                        questSystem.quest = startingQuestGiver.quest;
-                        questSystem.CompleteQuest();
-                        StartCoroutine(questGiver.OpenQuestWindowCoroutine());
-                    }
-                    else
-                    {
-                        questGiver.OpenQuestGiverWindow();
-                    }                    
-                }
-            }
-        }
+        //if (!isCatching && !isFishing && Input.GetKeyDown(KeyCode.X))
+        //{
+        //    RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
+        //    if (hit.collider != null)
+        //    {
+        //        QuestGiver questGiver = hit.collider.gameObject.GetComponentInChildren<QuestGiver>();
+        //        if (questGiver != null)
+        //        {
+        //            questGiver.enabled = true;
+        //            QuestGiver startingQuestGiver = GameObject.FindGameObjectWithTag("StartingQuestGiver").GetComponent<QuestGiver>();
+        //            if (startingQuestGiver.quest.isActive)
+        //            {
+        //                questSystem.quest = startingQuestGiver.quest;
+        //                questSystem.CompleteQuest();
+        //                StartCoroutine(questGiver.OpenQuestWindowCoroutine());
+        //            }
+        //            else
+        //            {
+        //                questGiver.OpenQuestGiverWindow();
+        //            }                    
+        //        }
+        //    }
+        //}
     }
 
     void FixedUpdate()

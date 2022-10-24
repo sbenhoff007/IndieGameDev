@@ -27,13 +27,13 @@ public class BattleSystem : MonoBehaviour
     int fishLevel;
     Sprite fishSprite;
 
-    Inventory inventory;
+    //Inventory inventory;
 
     // Start is called before the first frame update
     void Start()
     {
         state = BattleState.START;
-        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        //inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<RyanKHawkinsController>();
 
         fish = GetRandomFish();
@@ -92,17 +92,17 @@ public class BattleSystem : MonoBehaviour
 
         DisableActionButtons();
 
-        bool fishAdded = AddFishToInventory(fish);
+        //bool fishAdded = AddFishToInventory(fish);
         bool leveledUp = false;
         string text;
 
-        if (!fishAdded)
-        {
-            text = "No inventory slots available! You release the fish.";
-            state = BattleState.LOST;
-        }
-        else
-        {
+        //if (!fishAdded)
+        //{
+        //    text = "No inventory slots available! You release the fish.";
+        //    state = BattleState.LOST;
+        //}
+        //else
+        //{
             text = fish.fishName + " added to inventory!";
             player.currentExperiencePoints = player.currentExperiencePoints + 100;
             if (player.currentExperiencePoints >= player.maxExperiencePoints)
@@ -114,7 +114,7 @@ public class BattleSystem : MonoBehaviour
             }
             infoText.gameObject.SetActive(true);
             state = BattleState.WON;
-        }
+        //}
 
         dialogueText.text = text;
 
@@ -267,35 +267,35 @@ public class BattleSystem : MonoBehaviour
         Debug.Log("Exited FishTurn Coroutine at timestamp : " + Time.time);
     }
 
-    bool AddFishToInventory(Fish fish)
-    {
-        for (int i = 0; i <= 4; i++)
-        {
-            if (i > 3)
-            {
-                // Set the HUD text values
-                string text = "No inventory slots available! You release the fish.";
-                Debug.Log("i > 3! " + text);
-                //StartCoroutine(ShowDialogueMessage(text));
-                return false;
-            }
-            else
-            {
-                //Debug.Log("PlayerPrefs: InventoryItem" + i + " = " + PlayerPrefs.GetString("InventoryItem" + i));
-                string playerPrefs = PlayerPrefs.GetString("InventoryItem" + i);
-                if (string.IsNullOrEmpty(playerPrefs))
-                {
-                    //Item can be added to inventory!
-                    inventory.isFull[i] = true;
-                    PlayerPrefs.SetString("InventoryItem" + i, fish.fishName);
-                    //Debug.Log(fish.fishName + " Added to Inventory Slot " + i);
-                    return true;
-                }
-            }
-        }
+    //bool AddFishToInventory(Fish fish)
+    //{
+    //    for (int i = 0; i <= 4; i++)
+    //    {
+    //        if (i > 3)
+    //        {
+    //            // Set the HUD text values
+    //            string text = "No inventory slots available! You release the fish.";
+    //            Debug.Log("i > 3! " + text);
+    //            //StartCoroutine(ShowDialogueMessage(text));
+    //            return false;
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("PlayerPrefs: InventoryItem" + i + " = " + PlayerPrefs.GetString("InventoryItem" + i));
+    //            string playerPrefs = PlayerPrefs.GetString("InventoryItem" + i);
+    //            if (string.IsNullOrEmpty(playerPrefs))
+    //            {
+    //                //Item can be added to inventory!
+    //                inventory.isFull[i] = true;
+    //                PlayerPrefs.SetString("InventoryItem" + i, fish.fishName);
+    //                //Debug.Log(fish.fishName + " Added to Inventory Slot " + i);
+    //                return true;
+    //            }
+    //        }
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 
     IEnumerator FinishBattle()
     {
