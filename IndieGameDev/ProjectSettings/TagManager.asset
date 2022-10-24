@@ -3,7 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Equipment
+  - FishingRod
+  - Water
+  - Fish
+  - FishCollection
+  - FishObject
+  - InfoDialog
+  - NPC
+  - Quest
+  - StartingQuestGiver
+  - GameplaySystem
+  - QuestSystem
+  - QuestDB
+  - QuestJournalDialog
+  - QuestJournalItem
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -12,8 +28,8 @@ TagManager:
   - Water
   - UI
   - Town
-  - 
-  - 
+  - Character
+  - NPC
   - 
   - 
   - 
