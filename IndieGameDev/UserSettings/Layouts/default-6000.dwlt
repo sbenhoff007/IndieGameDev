@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 1037
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Scene
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 270
+  controlID: 111
   draggingID: 0
 --- !u!114 &3
 MonoBehaviour:
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 271
+  controlID: 49
   draggingID: 0
 --- !u!114 &10
 MonoBehaviour:
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 272
+  controlID: 50
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -598,7 +598,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scenes
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -608,21 +608,21 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/_Unity Essentials/Scripts
+  - Assets/Scenes
   m_LastFoldersGridSize: 96
-  m_LastProjectPath: C:\Projects\UnityEssentials\UnityEssentials
+  m_LastProjectPath: C:\Projects\IndieGameDev\IndieGameDev
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 354}
+    scrollPos: {x: 0, y: 0}
     m_SelectedIDs:
-    - m_rawData: 0
+    - m_rawData: 568105584918841164
     m_LastClickedID:
-      m_rawData: 0
+      m_rawData: 568105584918841164
     m_ExpandedIDs:
     - m_rawData: 0
-    - m_rawData: 568105584918841120
+    - m_rawData: 568105584918828084
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -656,7 +656,7 @@ MonoBehaviour:
       m_rawData: 0
     m_ExpandedIDs:
     - m_rawData: 0
-    - m_rawData: 568105584918841120
+    - m_rawData: 568105584918828084
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -684,8 +684,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs:
-    - m_rawData: 0
+    m_SelectedInstanceIDs: []
     m_LastClickedEntityId:
       m_rawData: 0
     m_HadKeyboardFocusLastEvent: 1
@@ -821,13 +820,38 @@ MonoBehaviour:
       m_LastClickedID:
         m_rawData: 0
       m_ExpandedIDs:
-      - m_rawData: 0
-      - m_rawData: 0
-      - m_rawData: 0
-      - m_rawData: 0
-      - m_rawData: 0
-      - m_rawData: 0
-      - m_rawData: 0
+      - m_rawData: 568105589213691414
+      - m_rawData: 568105589213692942
+      - m_rawData: 568105589213693798
+      - m_rawData: 568105589213694972
+      - m_rawData: 568105589213695742
+      - m_rawData: 568105589213698148
+      - m_rawData: 568105589213707664
+      - m_rawData: 568105589213707698
+      - m_rawData: 568105589213707742
+      - m_rawData: 568105584918840592
+      - m_rawData: 568105584918840694
+      - m_rawData: 568105584918840820
+      - m_rawData: 568105584918846812
+      - m_rawData: 568105584918846862
+      - m_rawData: 568105584918846912
+      - m_rawData: 568105584918846924
+      - m_rawData: 568105584918846956
+      - m_rawData: 568105584918846972
+      - m_rawData: 568105584918846980
+      - m_rawData: 568105584918848032
+      - m_rawData: 568105584918848050
+      - m_rawData: 568105584918848068
+      - m_rawData: 568105584918848102
+      - m_rawData: 568105584918848152
+      - m_rawData: 568105584918849326
+      - m_rawData: 568105584918849344
+      - m_rawData: 568105584918849362
+      - m_rawData: 568105584918849396
+      - m_rawData: 568105584918849446
+      - m_rawData: 568105584918850172
+      - m_rawData: 568105584918850188
+      - m_rawData: 568105584918850298
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1465,9 +1489,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 0, y: 0, z: 0}
+    m_Target: {x: 739.29803, y: 435.1859, z: -5.2519555}
     speed: 2
-    m_Value: {x: 577.5664, y: 492.41254, z: -102.34795}
+    m_Value: {x: 739.29803, y: 435.1859, z: -5.2519555}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1495,17 +1519,17 @@ MonoBehaviour:
       m_Size: {x: 1, y: 1}
     yGrid:
       m_Fade:
-        m_Target: 1
+        m_Target: 0
         speed: 2
-        m_Value: 1
+        m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_OffsetAlongAxis: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
     zGrid:
       m_Fade:
-        m_Target: 0
+        m_Target: 1
         speed: 2
-        m_Value: 0
+        m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_OffsetAlongAxis: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
@@ -1518,9 +1542,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10
+    m_Target: 613.66846
     speed: 2
-    m_Value: 561.63855
+    m_Value: 613.66846
   m_Ortho:
     m_Target: 1
     speed: 2
